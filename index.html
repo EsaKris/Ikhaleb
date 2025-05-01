@@ -429,18 +429,18 @@
             <h2 class="text-4xl md:text-5xl font-bold mb-16 playfair text-center">Let's Create Something Extraordinary</h2>
             <div class="flex flex-col lg:flex-row gap-12">
                 <div class="lg:w-1/2">
-                    <form class="space-y-6">
+                    <form id="whatsappForm" class="space-y-6" onsubmit="sendToWhatsApp(event)">
                         <div>
                             <label for="name" class="block mb-2 text-gray-300">Your Name</label>
-                            <input type="text" id="name" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white">
+                            <input type="text" id="name" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white">
                         </div>
                         <div>
                             <label for="email" class="block mb-2 text-gray-300">Your Email</label>
-                            <input type="email" id="email" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white">
+                            <input type="email" id="email" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white">
                         </div>
                         <div>
                             <label for="service" class="block mb-2 text-gray-300">Service Interested In</label>
-                            <select id="service" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white">
+                            <select id="service" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white">
                                 <option value="">Select a service</option>
                                 <option value="event">Event Videography</option>
                                 <option value="music">Music Video Production</option>
@@ -452,11 +452,12 @@
                         </div>
                         <div>
                             <label for="message" class="block mb-2 text-gray-300">Your Message</label>
-                            <textarea id="message" rows="5" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"></textarea>
+                            <textarea id="message" rows="5" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"></textarea>
                         </div>
                         <button type="submit" class="w-full px-6 py-3 bg-yellow-400 text-black font-bold rounded-lg hover:bg-yellow-300 transition">Send Message</button>
                     </form>
                 </div>
+    
                 <div class="lg:w-1/2">
                     <div class="bg-gray-900 p-8 rounded-lg h-full">
                         <h3 class="text-2xl font-bold mb-6 playfair">Contact Information</h3>
@@ -479,14 +480,14 @@
                                 <div class="text-yellow-400 mr-4 text-xl"><i class="fab fa-instagram"></i></div>
                                 <div>
                                     <h4 class="font-semibold mb-1">Instagram</h4>
-                                    <a href="https://instagram.com/tha_khaleb" class="text-gray-400 hover:text-yellow-400 transition">@tha_khaleb</a>
+                                    <a href="https://instagram.com/tha_khaleb" target="_blank" class="text-gray-400 hover:text-yellow-400 transition">@tha_khaleb</a>
                                 </div>
                             </div>
                             <div class="flex items-start">
                                 <div class="text-yellow-400 mr-4 text-xl"><i class="fab fa-facebook"></i></div>
                                 <div>
                                     <h4 class="font-semibold mb-1">Facebook</h4>
-                                    <a href="https://facebook.com/caleb.shone.17" class="text-gray-400 hover:text-yellow-400 transition">caleb.shone.17</a>
+                                    <a href="https://facebook.com/caleb.shone.17" target="_blank" class="text-gray-400 hover:text-yellow-400 transition">caleb.shone.17</a>
                                 </div>
                             </div>
                         </div>
@@ -580,6 +581,34 @@
                 observer.observe(container);
             });
         });
+ // Whatsapp form submission
+        function sendToWhatsApp(event) {
+    event.preventDefault();
+    
+    // Get form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const service = document.getElementById('service').value;
+    const message = document.getElementById('message').value;
+    
+    // Format the message for WhatsApp
+    const whatsappMessage = `New Contact Form Submission:\n\nName: ${name}\nEmail: ${email}\nService Interested In: ${service}\nMessage: ${message}`;
+    
+    // Encode the message for URL
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    
+    // Nigerian phone number (without the +234 country code in the URL)
+    const phoneNumber = '7056581199';
+    
+    // Create WhatsApp URL
+    const whatsappUrl = `https://wa.me/234${phoneNumber}?text=${encodedMessage}`;
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
+    
+    // Optional: Reset the form after submission
+    document.getElementById('whatsappForm').reset();
+}
     </script>
     <script async src="//www.instagram.com/embed.js"></script>
 </body>
